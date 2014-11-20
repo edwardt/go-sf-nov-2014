@@ -21,26 +21,79 @@ What is "maintainable"?
 - *DRY*: layered modular, reusable abstractions. More of _what_ we're doing, less of _how_ we're doing it.
 - *Type* *Safe*: static analysis = performance gains = tools help = performance and developer wins. (We prefer not to use `package reflect` unless we absolutely have to)
 - *Minimal* *code* *bottlenecks*: pieces of code which everyone must modify to make a certain type of change (for examples, a routes file). Such bottlenecks can increase overhead to concurrent development.
+- *Testable*: code is easily reconfigurable for a test environment and encapsulates distinct units of functionality
 
-* Problems we experienced
-
-Too much magic.
+* Problems we experienced: magic
 
 We thought the ORM solutions which existed when we started building were convenient, but hid too much from the user.
 
 Problems:
+
 - Not type safe (everything could be treated like a database model)
 - Not immediately comprehensible. (e.g. "how does the engine know where to get the model's table?")
 - Not easy to build on top of (e.g. shared database scenarios)
 
-* Problems we experienced
+* Problems we experienced: magic
 
-Too much magic.
+"The mantras surrounding to the Go community are simplicity, familiarity with the stdlib, and explicit interactions with the type system."
 
-"The mantras surrounding to Go community are simplicity, familiarity with the stdlib, and explicit interactions with the type system."
+"The real tradeoff with reflection is one of complexity."
 
-(from "My thoughts on Martini" @ codegansta.io)
+.link http://blog.codegangsta.io/blog/2014/05/19/my-thoughts-on-martini/ My Thoughts on Martini @ codegangsta.io
 
-* Fiatmobile
+* Solution: magic
 
-`TODO: lease a Fiat? 199 / mo. Would be fiatastic`
+Create an ORM based on an interface system. Each model explicitly defines its columns and table through methods.
+
+More verbose? Certainly. More readable & immediately grokkable (to us)? 10x.
+
+.code orm.model.go
+
+* Example model: User
+
+.code orm.user1.go
+
+* Example model: User (advanced)
+
+.code orm.user2.go
+
+* Example model: Comment
+
+.code orm.comment.go
+
+* Example usage
+
+.code orm.newUser.go
+.code orm.getUser.go
+
+* Example usage
+
+.code orm.getComments.go
+
+* Problems we experienced: repeated code for endpoint controllers
+
+In current ecosystem, ability to define useful route middleware limited to the "route group" level. Useful for catchall actions like logging or auth.
+
+What if different routes in the route group have...
+
+- different permissions?
+- different URL parameters?
+
+* Solution: repeated code for endpoint controllers
+
+Finer-grain middleware composition.
+
+We gave ourselves the ability to define middlewares globally, for a route collection, and for individual routes.
+
+* Middleware types
+
+.code api.types.go
+.code api.onlyAdmin.go
+
+* Middleware usage
+
+.code api.exampleRoute.go
+
+* Maintainability == Simplicity
+
+In the short term, `package reflect` can save developer time and effort. But in the long run, it often obfuscates the code's intent and sacrifices type safety.
