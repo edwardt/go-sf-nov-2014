@@ -1,0 +1,46 @@
+Scaling a Go Codebase
+GoSF Meetup, 20 Nov 2014
+
+Ted Kornish & Ryan Atallah
+Arktos
+
+https://arktos.io
+
+ted@arktos.io
+ryan@arktos.io
+
+* Our needs
+
+Build a maintainable infrastructure for a web API and its data models.
+
+What is "maintainable"?
+
+* Maintainable means...
+
+- *Easily* *extended*: can add anticipated functionality to the infrastructure with little overhead (e.g. new web endpoints)
+- *DRY*: layered modular, reusable abstractions. More of _what_ we're doing, less of _how_ we're doing it.
+- *Type* *Safe*: static analysis = performance gains = tools help = performance and developer wins. (We prefer not to use `package reflect` unless we absolutely have to)
+- *Minimal* *code* *bottlenecks*: pieces of code which everyone must modify to make a certain type of change (for examples, a routes file). Such bottlenecks can increase overhead to concurrent development.
+
+* Problems we experienced
+
+Too much magic.
+
+We thought the ORM solutions which existed when we started building were convenient, but hid too much from the user.
+
+Problems:
+- Not type safe (everything could be treated like a database model)
+- Not immediately comprehensible. (e.g. "how does the engine know where to get the model's table?")
+- Not easy to build on top of (e.g. shared database scenarios)
+
+* Problems we experienced
+
+Too much magic.
+
+"The mantras surrounding to Go community are simplicity, familiarity with the stdlib, and explicit interactions with the type system."
+
+(from "My thoughts on Martini" @ codegansta.io)
+
+* Fiatmobile
+
+`TODO: lease a Fiat? 199 / mo. Would be fiatastic`
