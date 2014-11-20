@@ -1,9 +1,5 @@
+// START1 OMIT
 package models
-
-import (
-	"arktos/pegasus/lib/db"
-	"time"
-)
 
 type Comment struct {
 	ID        int64     `json:"ID"`
@@ -26,10 +22,13 @@ func (c *Comment) Columns() map[string]interface{} {
 		"updated_at": &c.UpdatedAt,
 	}
 }
+// STOP1 OMIT
 
+// START2 OMIT
 func (c *Comment) InsertColumns() []string {
 	return []string{
-		"user_id", "contents",
+		"user_id",
+		"contents",
 	}
 }
 
@@ -49,3 +48,4 @@ func (u *User) Dependents() map[db.Model]db.Join {
 		},
 	}
 }
+// STOP2 OMIT

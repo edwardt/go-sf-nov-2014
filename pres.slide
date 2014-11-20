@@ -11,7 +11,10 @@ ryan@arktos.io
 
 * Our needs
 
-Build a maintainable infrastructure for a web API and its data models.
+Build a maintainable infrastructure for a web API and its data models that solves for the following 2 main pain points:
+
+- Too much magic (abstractions that make you wonder what's going)
+- Repeat code (specifically at the controller layer)
 
 What is "maintainable"?
 
@@ -41,7 +44,7 @@ Problems:
 
 .link http://blog.codegangsta.io/blog/2014/05/19/my-thoughts-on-martini/ My Thoughts on Martini @ codegangsta.io
 
-* Solution: magic
+* Solution: make it explicit
 
 Create an ORM based on an interface system. Each model explicitly defines its columns and table through methods.
 
@@ -51,15 +54,31 @@ More verbose? Certainly. More readable & immediately grokkable (to us)? 10x.
 
 * Example model: User
 
-.code orm.user1.go
+.code orm.user1.go /START1/,/STOP1/
+
+* Example model: User
+
+.code orm.user1.go /START2/,/STOP2/
 
 * Example model: User (advanced)
 
-.code orm.user2.go
+.code orm.user2.go /START1/,/STOP1/
+
+* Example model: User (advanced)
+
+.code orm.user2.go /START2/,/STOP2/
+
+* Example model: User (advanced)
+
+.code orm.user2.go /START3/,/STOP3/
 
 * Example model: Comment
 
-.code orm.comment.go
+.code orm.comment.go /START1/,/STOP1/
+
+* Example model: Comment
+
+.code orm.comment.go /START2/,/STOP2/
 
 * Example usage
 
@@ -78,10 +97,11 @@ What if different routes in the route group have...
 
 - different permissions?
 - different URL parameters?
+- different data dependencies?
 
 * Solution: repeated code for endpoint controllers
 
-Finer-grain middleware composition.
+More fine-grain middleware composition.
 
 We gave ourselves the ability to define middlewares globally, for a route collection, and for individual routes.
 
@@ -97,3 +117,7 @@ We gave ourselves the ability to define middlewares globally, for a route collec
 * Maintainability == Simplicity
 
 In the short term, `package reflect` can save developer time and effort. But in the long run, it often obfuscates the code's intent and sacrifices type safety.
+
+.image gophers.jpg
+
+.image fmt.png

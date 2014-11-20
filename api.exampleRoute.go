@@ -1,6 +1,8 @@
 func init() {
   var r routeCollection
   register("/v1/users", &r)
+
+  r.addMiddlewares(CORS, SetContentType)
   
   r.add("GET /", route{
     middlewares: []middleware{

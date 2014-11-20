@@ -1,6 +1,5 @@
+// START1 OMIT
 package models
-
-import "time"
 
 type User struct {
 	Name      string    `json:"name"`
@@ -19,7 +18,9 @@ type User struct {
 func (u *User) Table() string {
 	return "users"
 }
+// STOP1 OMIT
 
+// START2 OMIT
 func (u *User) Columns() map[string]interface{} {
 	return map[string]interface{}{
 		"name":          &u.Name,
@@ -36,7 +37,9 @@ func (u *User) InsertColumns() []string {
 		"name", "email", "password_hash",
 	}
 }
+// STOP2 OMIT
 
+// START3 OMIT
 func (u *User) UpdateColumns() []string {
 	return []string{
 		"name", "email", "password_hash",
@@ -46,3 +49,4 @@ func (u *User) UpdateColumns() []string {
 func (u *User) PreInsert() error {
 	u.PasswordHash = hash(u.Password)
 }
+// STOP3 OMIT

@@ -1,6 +1,5 @@
+// START1 OMIT
 package models
-
-import "time"
 
 type User struct {
 	Name      string    `json:"name"`
@@ -23,7 +22,9 @@ func (u *User) Columns() map[string]interface{} {
 		"updated_at": &u.UpdatedAt,
 	}
 }
+// STOP1 OMIT
 
+// START2 OMIT
 func (u *User) InsertColumns() []string {
 	return []string{
 		"name", "email",
@@ -35,3 +36,4 @@ func (u *User) UpdateColumns() []string {
 		"name", "email",
 	}
 }
+// STOP2 OMIT
